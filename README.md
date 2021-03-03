@@ -10,6 +10,6 @@ Crea entorno virtual `virtualenv venv` y actívalo `source venv/bin/activate`.
 
 Se necesita flask `pip install flask`.
 
-## Dependencies
+## Run
 
 Ejecutas `python app.py`.
