@@ -1,11 +1,15 @@
-# Softlusion backend-entrega1-PC3 asi se pone titulo
+# Softlusion backend-entrega1-PC3
 
-Comentario
+Instrucciones
 
-## Titulo 2
+## venv
 
-Comando `ng serve` otro comando `http://localhost:4200/`. 
+Crea entorno virtual `virtualenv venv` y actívalo `source venv/bin/activate`.
 
-## Titulo 2
+## Dependencies
 
-Comando `ng serve` otro comando `http://localhost:4200/`. 
+Se necesita flask `pip install flask`.
+
+## Dependencies
+
+Ejecutas `python app.py`.
