@@ -49,33 +49,32 @@ def delete_actividad(id):
     actividades.remove(actividad[0])
     return jsonify({'result': True})
 
-@app.route('/sentimiento', methods = ['POST'])
-def sentimiento():
-    if request.method == 'POST':
-        sentencia = request.form['sentencia']
-        analysis = TextBlob(sentencia)
-        traduccion= analysis.translate(to='en')
-        print(traduccion)
-        analysisPol = traduccion.sentiment.polarity
-        analysisSub = traduccion.sentiment.subjectivity
-        print(f'Tiene una polaridad de {analysisPol} y una subjectibidad de {analysisSub}')
-        if analysisPol >= 0.7:
-            return 'muy feliz'
-            print ('muy feliz')
-        elif analysisPol >= 0.3 and analysisPol < 0.7:
-            return 'feliz, o mas o menos feliz'
-            print ('feliz, o mas o menos feliz')
-        elif analysisPol > -0.3 and analysisPol < 0.3:
-            return 'Sentimiento neutral'
-            print ('Sentimiento neutral')
-        elif analysisPol > -0.7 and analysisPol <= -0.3:
-            return 'triste, o mas o menos triste'
-            print ('triste, o mas o menos triste') 
-        else:
-            return 'muy triste'
-            print('muy triste')
-        return 'recibido'
-
+@app.route('/sentiment', methods = ['POST'])
+def sentiment():
+    sentiment = request.form['message']
+    analysis = TextBlob(sentiment)
+    language = analysis.detect_language()
+    if language != 'en':
+        analysis= analysis.translate(to='en')
+    print(analysis)
+    analysisPol = analysis.sentiment.polarity
+    analysisSub = analysis.sentiment.subjectivity
+    print(f'Tiene una polaridad de {analysisPol} y una subjectibidad de {analysisSub}')
+    if analysisPol >= 0.7:
+        # muy feliz
+        return jsonify({'result': 1})
+    elif analysisPol >= 0.3 and analysisPol < 0.7:
+        # feliz, o mas o menos feliz
+        return jsonify({'result': 2})
+    elif analysisPol > -0.3 and analysisPol < 0.3:
+        # Sentimiento neutral
+        return jsonify({'result': 3})
+    elif analysisPol > -0.7 and analysisPol <= -0.3:
+        # triste, o mas o menos triste
+        return jsonify({'result': 4})
+    else:
+        # muy triste
+        return jsonify({'result': 5})
 
 if __name__ == '__main__':
     app.run(debug=True)
