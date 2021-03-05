@@ -51,7 +51,7 @@ def delete_actividad(id):
 
 @app.route('/sentiment', methods = ['POST'])
 def sentiment():
-    sentiment = request.form['message']
+    sentiment = request.json['texto']
     analysis = TextBlob(sentiment)
     language = analysis.detect_language()
     if language != 'en':
