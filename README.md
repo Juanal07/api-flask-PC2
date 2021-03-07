@@ -8,7 +8,7 @@ Crea entorno virtual `virtualenv venv` y actívalo `source venv/bin/activate`.
 
 ## Dependencies
 
-Se necesita flask `pip install flask`.
+Instalar dependencies `pip install -r requirements.txt`.
 
 ## Run
 
