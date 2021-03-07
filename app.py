@@ -1,8 +1,11 @@
 #!bin/python
 from flask import Flask, jsonify, abort, request, make_response, url_for
 from textblob import TextBlob
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 
 @app.errorhandler(404)
 def not_found(error):
