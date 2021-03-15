@@ -4,7 +4,7 @@ Instrucciones
 
 ## venv
 
-Crea entorno virtual `virtualenv venv` y actívalo `source venv/bin/activate`.
+Crea entorno virtual `virtualenv venv` y actívalo `source venv/bin/activate`, en Windows `venv\Scripts\activate`.
 
 ## Dependencies
 
