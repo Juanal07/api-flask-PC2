@@ -17,3 +17,16 @@ Install dependencies `pip install -r requirements.txt`.
 ## Run
 
 Run `python app.py`.
+
+## Project tree
+
+
+```
+.
+├── app.py
+├── README.md
+├── requirements.txt
+└── src
+    ├── sentiment
+    └── webscraping
+```
