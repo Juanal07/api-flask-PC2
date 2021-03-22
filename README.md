@@ -30,3 +30,7 @@ Run `python app.py`.
     ├── sentiment
     └── webscraping
 ```
+
+## To create requirements.txt
+
+`pipreqs .`.
