@@ -1,15 +1,19 @@
 # Softlusion backend-entrega1-PC3
 
-Instrucciones
+Sentiment analysis and web scraping services. 
 
 ## venv
 
-Crea entorno virtual `virtualenv venv` y actívalo `source venv/bin/activate`, en Windows `venv\Scripts\activate`.
+Create virtual environment `virtualenv venv` and activate:
+
+-MacOS and Linux `source venv/bin/activate`.
+
+-Windows `venv\Scripts\activate`.
 
 ## Dependencies
 
-Instalar dependencies `pip install -r requirements.txt`.
+Install dependencies `pip install -r requirements.txt`.
 
 ## Run
 
-Ejecutas `python app.py`.
+Run `python app.py`.
