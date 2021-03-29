@@ -3,7 +3,7 @@ from flask import Flask, jsonify, abort, request, make_response
 
 from flask_cors import CORS
 
-from src.webscraping import ws_15mpedia,  ws_supermercados, ejemplo
+from src.webscraping import ws_15mpedia,  ws_supermercados
 
 def main():
     app = Flask(__name__)
@@ -22,5 +22,5 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    ws_15mpedia.scraping()
-    #ejemplo.scrap()
+    #ws_15mpedia.scraping()
+    ws_supermercados.scraping()
