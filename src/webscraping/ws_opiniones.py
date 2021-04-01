@@ -32,11 +32,7 @@ def ws_pueblo(link):
     soup = soup.find_all(attrs={"class": "listing-item-title"})
     for item in soup:
         link = item.a['href']
-        # print('------------------')
-        # print('------------------')
         ws_restaurant(link)
-        # print('------------------')
-        # print(link) 
     return None
 
 def ws_restaurant(link):
@@ -45,11 +41,15 @@ def ws_restaurant(link):
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
     nombre = soup.find(attrs={"itemprop": "name"}).text
-    print('--------',nombre,'--------')
+    # nombre = re.sub(' ', '', nombre)
+    print('+Restaurante: ',nombre)
+    print('--------------')
     soup = soup.find_all(attrs={"class": "excerpt"})
     for item in soup:
         opinion = item.text
-        print(opinion)
+        opinion = re.sub('\n\s*', '', opinion)
+        print('-Opinión: ', opinion)
+        print('--------------')
     return None
 
 
