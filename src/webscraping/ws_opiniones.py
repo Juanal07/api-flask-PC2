@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 def scraping():
 
-    pueblo = input("\nIntroduzca municipio: ")
+    pueblo = input("Introduzca municipio: ")
     # pueblo = 'madrid'
     provincia = 'madrid'
     URL = 'http://www.buscorestaurantes.com/filtrar-ubicacion-en/'+provincia
