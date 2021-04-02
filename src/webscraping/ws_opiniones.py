@@ -52,8 +52,3 @@ def ws_restaurant(link):
         print('--------------')
     return None
 
-
-
-
-
-
