@@ -1,8 +1,5 @@
-
 from flask import Flask, jsonify, abort, request, make_response
-
 from flask_cors import CORS
-
 from src.webscraping import ws_15mpedia
 from src.webscraping import ws_opiniones
 
@@ -19,7 +16,6 @@ def main():
         return jsonify({'result': 0.7})
 
     app.run(debug=True)
-
 
 if __name__ == '__main__':
     # main()

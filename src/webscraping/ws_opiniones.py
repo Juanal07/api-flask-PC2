@@ -29,6 +29,7 @@ def ws_pueblo(link):
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
     soup = soup.find(attrs={"class": "listado-items"})
+    print
     soup = soup.find_all(attrs={"class": "listing-item-title"})
     for item in soup:
         link = item.a['href']
