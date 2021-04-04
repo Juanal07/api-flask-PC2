@@ -8,3 +8,9 @@ def scraping():
     soup = BeautifulSoup(page.content, 'html.parser')
     print(soup)
     return None
+
+def getMunicipios():
+    Municipios = []
+    tabla = soup.find_all('tr')
+    for item in tabla:
+
