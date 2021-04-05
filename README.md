@@ -1,4 +1,4 @@
-# Softlusion backend-entrega1-PC3
+# Softlusion
 
 Sentiment analysis and web scraping services. 
 
