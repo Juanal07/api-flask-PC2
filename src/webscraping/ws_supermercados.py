@@ -40,9 +40,9 @@ def searchProvincias(URL):
 
         if (name == provincia):
             link = item.find('a')['href']
-            print(link)
+            #print(link)
             resultadoProvincia=True
-            print("SUCCESS")
+            #print("SUCCESS")
             searchMunicipios(URL,name,link)
             break
 
@@ -68,9 +68,9 @@ def searchMunicipios(URL,name,linkProvincia):
         #print(name)
         if (name == municipio):
             link = item['href']
-            print(link)
+            #print(link)
             resultadoMunicipio=True
-            print("SUCCESS")
+            #print("SUCCESS")
             showSupermercados(URL,link)
             break
     if resultadoMunicipio==False:
@@ -92,25 +92,6 @@ def showSupermercados(URL, link):
             distancia = divMunicipio[3][13:len(divMunicipio[3])-3]
             direccion = divMunicipio[8]
 
-            #muchos problemas codigos postales con direcciones inconsistentes y posiciones en sitios diferentes del div
-            #intentos para obtener el municipio y codigo postal, finalmente se descarta
-            '''codPostal = divMunicipio[10][:5]
-            codPostal = municipio[0][:5] #para provenientes de link
-            codPostal += "divMunicipio"
-            #municipio = divMunicipio[10][6:]
-            municipio = municipio[0][8:] #para provenientes de link
-            municipio = "divMunicipio"+municipio'''
-
-            '''try:
-                    codPostal = divMunicipio[10][:5]
-                    municipio = divMunicipio[10][6:]
-            except:
-                print("ERROR")
-                codPostal = municipio[0][:5]
-                    municipio = municipio[0][8:]'''
-            '''print(codPostal)
-            print(municipio)'''
-
             #meto datos en la lista: nombre del supermercado, direción, distancia y provincia
             tupla = (nombre, direccion, distancia)
             print(tupla)
@@ -118,5 +99,8 @@ def showSupermercados(URL, link):
 
     except:
         print("\nERROR en ", linkMunicipio, "\n")
+
+    if len(supermercados)==0:
+        print("No se encontraron supermercados cercanos en ese municipio")
     
     #print(supermercados)
