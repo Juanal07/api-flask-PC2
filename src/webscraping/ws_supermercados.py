@@ -56,6 +56,7 @@ def searchMunicipios(URL,name,linkProvincia):
         name = item.text
         name = name.lower()
         name = name[8:]
+        print(name)
         if (name == municipio):
             link = item['href']
             resultadoMunicipio=True

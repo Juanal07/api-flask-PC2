@@ -21,7 +21,7 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    ws_15mpedia.scraping()
+    # ws_15mpedia.scraping()
     # ws_opiniones.scraping()
-    # ws_supermercados.scraping()
+    ws_supermercados.scraping()
     # ws_noticias.scraping()
