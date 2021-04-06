@@ -6,16 +6,8 @@ from bs4 import BeautifulSoup
 
 def scraping():
     URL = 'https://www.supermercados-en-espana.com'
-    #variables auxiliares
-    '''linksProvincias = []
-    linksMunicipios = []'''
-    #supermercados = [] #datos a extraer: nombre del supermercado, direción, distancia y provincia
 
     searchProvincias(URL)
-    '''searchMunicipios(URL)
-    showSupermercados(URL, supermercados)'''
-
-    #print(supermercados)
 
 def searchProvincias(URL):
     provincia = input("Introduce el nombre de la provincia (con minúsculas y tilde): ")
@@ -35,42 +27,38 @@ def searchProvincias(URL):
         name = re.sub('comunidad foral de ','',name)
         name = re.sub('región de ','',name)
         name = re.sub('principado de ','',name)
-        #name = re.sub(r'(.*) \/.*',,name)
-        #print(name)
-
+        if "/" in name:
+            reg = re.match('(.*) \/.*',name)
+            name = reg.group(1)
+        print(name)
+        #digo se si ha encontrado la provinica o no
         if (name == provincia):
             link = item.find('a')['href']
-            #print(link)
             resultadoProvincia=True
-            #print("SUCCESS")
             searchMunicipios(URL,name,link)
             break
 
     if resultadoProvincia==False:
         print("Provincia no encontrada")       
 
-    #return None
 
 def searchMunicipios(URL,name,linkProvincia):
+    #obtengo los links de los municipios de la provincia
     linkProvincia = URL+linkProvincia
     resultadoMunicipio=False
     proviniciaPage = requests.get(linkProvincia)
     htmlProvinciaPage = BeautifulSoup(proviniciaPage.content, 'html.parser')
     aux = htmlProvinciaPage.find_all('table', width="700")
     tablaMunicipios = aux[0].find_all('a')
-
+    #busco el municipio dentor de la provincia
     municipio = input("Introduce el nombre del municipio (con minúsculas y tilde): ")
     for item in tablaMunicipios:
-        #tupla = (item.text, item['href'], link[0])
         name = item.text
         name = name.lower()
         name = name[8:]
-        #print(name)
         if (name == municipio):
             link = item['href']
-            #print(link)
             resultadoMunicipio=True
-            #print("SUCCESS")
             showSupermercados(URL,link)
             break
     if resultadoMunicipio==False:
