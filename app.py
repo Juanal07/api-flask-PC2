@@ -1,7 +1,11 @@
 from flask import Flask, jsonify, abort, request, make_response
 from flask_cors import CORS
 from src.webscraping import ws_15mpedia
+
 from src.webscraping import ws_opiniones
+
+from src.sentiment import sentiment
+
 
 def main():
     app = Flask(__name__)
@@ -11,9 +15,10 @@ def main():
     def not_found(error):
         return make_response(jsonify({'error':'Not found'}),404)
 
-    @app.route('/sentiment', methods = ['POST'])
+    @app.route('/api/sentiment', methods = ['POST'])
     def sentiment():
-        return jsonify({'result': 0.7})
+        # return sentiment.getSentiment(request.json['text'])
+        return jsonify({'result':1})
 
     app.run(debug=True)
 
