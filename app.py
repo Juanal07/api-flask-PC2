@@ -1,10 +1,11 @@
-
 from flask import Flask, jsonify, abort, request, make_response
-
 from flask_cors import CORS
-
 from src.webscraping import ws_15mpedia
+
+from src.webscraping import ws_opiniones
+
 from src.sentiment import sentiment
+
 
 def main():
     app = Flask(__name__)
@@ -21,7 +22,7 @@ def main():
 
     app.run(debug=True)
 
-
 if __name__ == '__main__':
-    main()
+    # main()
     # ws_15mpedia.scraping()
+    ws_opiniones.scraping()
