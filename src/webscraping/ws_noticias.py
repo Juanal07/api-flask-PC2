@@ -2,8 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-
-
 def scraping():
     Pueblo = input('Introduzca un municipio: ')
     url = 'https://www.20minutos.es/busqueda//?q='+Pueblo+'&sort_field=&category=&publishedAt%5Bfrom%5D=&publishedAt%5Buntil%5D='
@@ -47,8 +45,5 @@ def ws_texto(titulo):
         print('No se pudo scrapiar')
         texto = soup.find_all('div', class_='video-intro')
         
-    #return None              
-    
+    return None              
 
-  
-scraping()
