@@ -1,4 +1,4 @@
-# Softlusion backend-entrega1-PC3
+# Softlusion
 
 Sentiment analysis and web scraping services. 
 
@@ -20,15 +20,22 @@ Run `python app.py`.
 
 ## Project tree
 
+`tree -L 3`
 
 ```
 .
 ├── app.py
 ├── README.md
 ├── requirements.txt
-└── src
-    ├── sentiment
-    └── webscraping
+├── src
+│   ├── sentiment
+│   │   ├── __pycache__
+│   │   └── sentiment.py
+│   └── webscraping
+│       ├── __pycache__
+│       ├── ws_15mpedia.py
+│       └── ws_noticias.py
+└── venv
 ```
 
 ## To create requirements.txt
