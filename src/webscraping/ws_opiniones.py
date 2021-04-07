@@ -1,12 +1,12 @@
 import requests
 import re
 from bs4 import BeautifulSoup
-
+# TODO: scrapear con opcion de siguiente pagina 
 def scraping():
 
-    pueblo = input("Introduzca municipio: ")
+    provincia = input("Introduzca provincia: (minúsculas y con tildes)")
+    pueblo = input("Introduzca municipio: (minúsculas y con tildes)")
     # pueblo = 'madrid'
-    provincia = 'madrid'
     URL = 'http://www.buscorestaurantes.com/filtrar-ubicacion-en/'+provincia
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')

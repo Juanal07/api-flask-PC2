@@ -21,7 +21,23 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    # ws_15mpedia.scraping()
-    # ws_opiniones.scraping()
-    ws_supermercados.scraping()
-    # ws_noticias.scraping()
+    while True:
+        print('Opciones: \n 1-Opiniones de restaurantes \
+            \n 2-Supermercados \
+            \n 3-Noticias \
+            \n 4-Lista de todos los municipios (Tiempo de ejecucion elevado) \
+            \n -Otra tecla para salir')
+
+        selector = input('Introduzca la opcion deseada: ')
+
+        if selector == '1':
+            ws_opiniones.scraping()
+        elif selector == '2':
+            ws_supermercados.scraping()
+        elif selector == '3':
+            ws_noticias.scraping()
+        elif selector == '4':
+            ws_15mpedia.scraping()
+        else:
+            print('Fin')
+            exit(0)

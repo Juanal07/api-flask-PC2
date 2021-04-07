@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup
 
 #a la hora de los INSERT en BBDD hay que evitar los duplicados buscando por el nombre del supermercado
-
+# TODO: mirar el tema de las tildes
 def scraping():
     URL = 'https://www.supermercados-en-espana.com'
 
@@ -30,7 +30,7 @@ def searchProvincias(URL):
         if "/" in name:
             reg = re.match('(.*) \/.*',name)
             name = reg.group(1)
-        print(name)
+        # print(name)
         #digo se si ha encontrado la provinica o no
         if (name == provincia):
             link = item.find('a')['href']
@@ -56,7 +56,7 @@ def searchMunicipios(URL,name,linkProvincia):
         name = item.text
         name = name.lower()
         name = name[8:]
-        print(name)
+        # print(name)
         if (name == municipio):
             link = item['href']
             resultadoMunicipio=True
