@@ -4,6 +4,7 @@ import re
 
 def scraping():
     Pueblo = input('Introduzca un municipio: ')
+    #Pueblo = 'villaviciosa de odon'
     url = 'https://www.20minutos.es/busqueda//?q='+Pueblo+'&sort_field=&category=&publishedAt%5Bfrom%5D=&publishedAt%5Buntil%5D='
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -14,6 +15,7 @@ def scraping():
         link2 = item.find('a')['href']
         print('----------------------'+str(i)+'------------------------------')
         ws_articulo(link2)
+        ws_fecha(link2)
         ws_texto(link2)
         i+=1
 
@@ -25,6 +27,19 @@ def ws_articulo(link):
         titulo = soup.find('h1', class_='article-title')
         titulo = titulo.text
         print('Titulo: '+ titulo)   
+
+    except:
+        print('No se pudo scrapiar')
+    return None 
+
+def ws_fecha(noticia):
+    try:
+        page = requests.get(noticia)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        #print(soup)
+        fecha = soup.find('span', class_='article-date')
+        fecha = fecha.text
+        print('Fecha: ' + fecha)   
 
     except:
         print('No se pudo scrapiar')
@@ -45,5 +60,9 @@ def ws_texto(titulo):
         print('No se pudo scrapiar')
         texto = soup.find_all('div', class_='video-intro')
         
-    return None              
+    return None    
 
+'''
+if __name__ == '__main__':
+    scraping()          
+'''
