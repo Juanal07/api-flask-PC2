@@ -25,3 +25,4 @@ def getSentiment(textInput):
     else:
         # muy triste
         return jsonify({'result': 5})
+

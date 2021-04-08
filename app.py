@@ -4,6 +4,7 @@ from src.webscraping import ws_15mpedia
 from src.webscraping import ws_opiniones
 from src.webscraping import ws_supermercados
 from src.webscraping import ws_noticias
+from src.sentiment import sentiment
 
 def main():
     app = Flask(__name__)
@@ -11,18 +12,17 @@ def main():
 
     @app.errorhandler(404)
     def not_found(error):
-        return make_response(jsonify({'error':'Not found'}),404)
+        return make_response(jsonify({'error': 'Not found'}), 404)
 
-    @app.route('/sentiment', methods = ['POST'])
-    def sentiment():
-        return jsonify({'result': 0.7})
+    @app.route('/api/sentiment', methods=['POST'])
+    def sentimiento():
+        return sentiment.getSentiment(request.json['text'])
 
     app.run(debug=True)
 
-if __name__ == '__main__':
-    # TODO probar el tema de textblob
+
+def webscraping():
     # TODO paginacion
-    # main()
     while True:
         print('Opciones: \
             \n 1-Opiniones de restaurantes \
@@ -46,3 +46,8 @@ if __name__ == '__main__':
             exit(0)
         else:
             print('\nError, introduzca una opción válida\n')
+
+
+if __name__ == '__main__':
+    # main()
+    webscraping()

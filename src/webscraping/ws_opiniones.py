@@ -1,17 +1,17 @@
 import requests
 import re
 from bs4 import BeautifulSoup
-# TODO: scrapear con opcion de siguiente pagina 
+
 def scraping():
 
     provincia = input("Introduzca provincia: (minúsculas y con tildes)")
     pueblo = input("Introduzca municipio: (minúsculas y con tildes)")
-    # pueblo = 'madrid'
     URL = 'http://www.buscorestaurantes.com/filtrar-ubicacion-en/'+provincia
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
     soup = soup.find(attrs={"class": "block-level"})
     soup = soup.find_all('li')
+    # TODO refactor a while
     for item in soup:
         link = item.find('a')['href']
         name = item.find('a').text
@@ -25,15 +25,17 @@ def scraping():
 
 def ws_pueblo(link):
 
-    URL = link
-    page = requests.get(URL)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    soup = soup.find(attrs={"class": "listado-items"})
-    print
-    soup = soup.find_all(attrs={"class": "listing-item-title"})
-    for item in soup:
-        link = item.a['href']
-        ws_restaurant(link)
+    while link != '':
+        URL = link
+        page = requests.get(URL)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        lista = soup.find(attrs={"class": "listado-items"})
+        lista = lista.find_all(attrs={"class": "listing-item-title"})
+        for item in lista:
+            link = item.a['href']
+            ws_restaurant(link)
+        nextPage = soup.find(attrs={"class": "next"}).a['href']
+        link = nextPage
     return None
 
 def ws_restaurant(link):
@@ -42,7 +44,6 @@ def ws_restaurant(link):
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
     nombre = soup.find(attrs={"itemprop": "name"}).text
-    # nombre = re.sub(' ', '', nombre)
     print('+Restaurante: ',nombre)
     print('--------------')
     soup = soup.find_all(attrs={"class": "excerpt"})
