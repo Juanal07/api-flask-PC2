@@ -20,15 +20,18 @@ def main():
     app.run(debug=True)
 
 if __name__ == '__main__':
+    # TODO probar el tema de textblob
+    # TODO paginacion
     # main()
     while True:
-        print('Opciones: \n 1-Opiniones de restaurantes \
+        print('Opciones: \
+            \n 1-Opiniones de restaurantes \
             \n 2-Supermercados \
             \n 3-Noticias \
             \n 4-Lista de todos los municipios (Tiempo de ejecucion elevado) \
-            \n -Otra tecla para salir')
+            \n s-Para salir')
 
-        selector = input('Introduzca la opcion deseada: ')
+        selector = input('Introduzca la opción deseada: ')
 
         if selector == '1':
             ws_opiniones.scraping()
@@ -38,6 +41,8 @@ if __name__ == '__main__':
             ws_noticias.scraping()
         elif selector == '4':
             ws_15mpedia.scraping()
-        else:
-            print('Fin')
+        elif selector == 's':
+            print('¡Hasta pronto!')
             exit(0)
+        else:
+            print('\nError, introduzca una opción válida\n')
