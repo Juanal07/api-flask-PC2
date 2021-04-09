@@ -29,7 +29,7 @@ def ws_articulo(link):
         print('Titulo: '+ titulo)   
 
     except:
-        print('No se pudo scrapiar')
+        print('No se pudo scrapear')
     return None 
 
 def ws_fecha(noticia):
@@ -42,27 +42,25 @@ def ws_fecha(noticia):
         print('Fecha: ' + fecha)   
 
     except:
-        print('No se pudo scrapiar')
+        print('No se pudo scrapear')
     return None 
 
 def ws_texto(titulo):
     try:
         page = requests.get(titulo)
         soup = BeautifulSoup(page.content, 'html.parser')
-        #print(soup)
         texto = soup.find('div', class_="article-text")
         texto = soup.find_all('p', class_='paragraph')
         for  textos in texto:
             #texto1 = textos.find('a')['href']
             print (textos.text)
-
     except:
-        print('No se pudo scrapiar')
-        texto = soup.find_all('div', class_='video-intro')
-        
+        print('No se pudo scrapear')
     return None    
+
 
 '''
 if __name__ == '__main__':
     scraping()          
+
 '''
