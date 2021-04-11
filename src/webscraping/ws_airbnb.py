@@ -3,44 +3,34 @@ import re
 from bs4 import BeautifulSoup
 
 def scraping():
-    #URL = 'https://elpais.com/buscador/?qt=ios&sf=0&np=1&bu=ep&of=html'
     URL = 'https://www.airbnb.es/s/madrid/homes?tab_id=home_tab&refinement_paths%5B%5D=%2Fhomes&flexible_trip_dates%5B%5D=april&flexible_trip_dates%5B%5D=may&flexible_trip_lengths%5B%5D=weekend_trip&date_picker_type=calendar&checkin=2021-04-16&checkout=2021-04-23&source=structured_search_input_header&search_type=filter_change'
     mainURL = 'https://www.airbnb.es'
-    '''page = requests.get(URL)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    print(soup)'''
     nextPageBool = True
-    i=1
+    opiniones = []
     while nextPageBool:
-        #print(URL)
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, 'html.parser')
-        '''noticias = soup.find_all('div', class_="noticia")
-        for noticia in noticias:
-            titulo = noticia.find('a', title_="Ver noticia").text
-            link = noticia.find('a', title_="Ver noticia")["href"]
-            print(titulo," ",link)'''
         casas = soup.find_all('div', class_="_8ssblpx")
         for casa in casas:
             name = casa.find('a', class_="_mm360j")
             name = name.attrs['aria-label']
-            #print(name)
             precio = casa.find('span', class_="_krjbj").text
-            #print(precio)
             link = casa.find('a')["href"]
-            tupla = (name,precio,link)
+            media = float(soup.find('span', class_="_10fy1f8").text)
+            tupla = (name,precio,link,media)
+            opiniones.append(media)
             print(tupla)
-            #break
         #obtengo la clase del boton activo, busco el siguiente hijo y compruebo si tiene link o es boton
         actualPage = soup.find(class_="_15k0tg7v")
-        #print(actualPage.next_sibling)
         lastTag = actualPage.next_sibling.has_attr('href')
-        #print(lastTag)
-        #print(actualPage.next)
         if not lastTag:
             nextPageBool=False
         else:
             nextPage = actualPage.next_sibling["href"]
             URL = mainURL + nextPage
-        '''print(i)
-        i=i+1'''
+    #hago la media de todas las noticias
+    total = 0
+    for opinion in opiniones:
+        total = total + opinion
+    mediaFinal = total/len(opiniones)
+    print("\nLa media final es ",mediaFinal)
