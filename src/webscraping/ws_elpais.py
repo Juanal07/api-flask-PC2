@@ -10,16 +10,11 @@ def scraping():
     soup = BeautifulSoup(page.content, 'html.parser')
     print(soup)'''
     nextPageBool = True
-    i=0
+    i=1
     while nextPageBool:
         #print(URL)
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, 'html.parser')
-        #print(soup)
-        # test = soup.has_attr
-        nextPage = soup.find('a', class_="_1y623pm")["href"]
-        #print(nextPage)
-        URL = mainURL + nextPage
         '''noticias = soup.find_all('div', class_="noticia")
         for noticia in noticias:
             titulo = noticia.find('a', title_="Ver noticia").text
@@ -36,12 +31,16 @@ def scraping():
             tupla = (name,precio,link)
             print(tupla)
             #break
-        #en ultima pagina el elemento siguiente al activo es un boton, intentar tirar de ahi
+        #obtengo la clase del boton activo, busco el siguiente hijo y compruebo si tiene link o es boton
         actualPage = soup.find(class_="_15k0tg7v")
-        print(actualPage.next_sibling)
+        #print(actualPage.next_sibling)
         lastTag = actualPage.next_sibling.has_attr('href')
-        print(lastTag)
+        #print(lastTag)
         #print(actualPage.next)
         if not lastTag:
             nextPageBool=False
-        #i=i+1
+        else:
+            nextPage = actualPage.next_sibling["href"]
+            URL = mainURL + nextPage
+        '''print(i)
+        i=i+1'''
