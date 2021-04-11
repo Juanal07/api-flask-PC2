@@ -4,7 +4,8 @@ from src.webscraping import ws_15mpedia
 from src.webscraping import ws_opiniones
 from src.webscraping import ws_supermercados
 from src.webscraping import ws_noticias
-from src.webscraping import ws_elpais
+from src.webscraping import ws_airbnb
+from src.webscraping import ws_eltenedor
 from src.sentiment import sentiment
 
 def main():
@@ -52,4 +53,5 @@ def webscraping():
 if __name__ == '__main__':
     # main()
     #webscraping()
-    ws_elpais.scraping()
+    ws_airbnb.scraping()
+    #ws_eltenedor.scraping()
