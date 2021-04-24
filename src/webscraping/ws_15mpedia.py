@@ -13,25 +13,28 @@ def shield(link):
     link = soup.find(class_="fullImageLink")
     link = link.find('a')['href']
     print('Escudo - ' + link)
-    return None
+    return link
 
 def scraping():
     #Conexión con BBDD
-    # try:
-    #     conn = mariadb.connect(
-    #         user="pr_softlusion",
-    #         password="Softlusion",
-    #         host="2.139.176.212",
-    #         port=3306,
-    #         database="prsoftlusion"
-    #     )
-    #     print("Conexión a BBDD")
-    # except mariadb.Error as e:
-    #     print(f"Error connecting to MariaDB Platform: {e}")
-    #     sys.exit(1)
+    try:
+        conn = mariadb.connect(
+            user="pr_softlusion",
+            password="Softlusion",
+            host="2.139.176.212",
+            port=3306,
+            database="prsoftlusion"
+        )
+        print("Conexión a BBDD")
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB Platform: {e}")
+        sys.exit(1)
 
-    # # Get Cursor
-    # cur = conn.cursor()
+    # Get Cursor
+    cur = conn.cursor()
+
+    # cur.execute("INSERT INTO user(NAME,email,PASSWORD,active,TYPE,dateSignIn) VALUES ('jfoo','jfoi','ihfi',1,1,NOW());")
+    # conn.commit()
     
     URL = 'https://15mpedia.org/w/index.php?title=Especial:Ask&offset=0&limit=8134&q=%5B%5BPage+has+default+form%3A%3AMunicipio%5D%5D+%5B%5Bpa%C3%ADs%3A%3AEspa%C3%B1a%5D%5D&p=format%3Dtable%2Fmainlabel%3DMunicipio&po=%3F%3DMunicipio%23%0A%3FComarca%23-%0A%3FProvincia%0A%3FComunidad+aut%C3%B3noma%3DCC.AA.%0A%3FAltitud%3DAltitud+%28m.s.n.m.%29%0A%3FSuperficie%3DSuperficie+%28km%C2%B2%29%0A%3FPoblaci%C3%B3n+en+2019%3DPoblaci%C3%B3n+%282019%29%0A%3FDensidad+de+poblaci%C3%B3n%3DDensidad+%28hab.%2Fkm%C2%B2%29%0A&sort=nombre&order=asc'
     page = requests.get(URL)
@@ -45,7 +48,7 @@ def scraping():
         print('Municipio - ' + municipioStr)
         #----Escudo----
         link = municipio.find('a')['href']
-        shield(link)
+        escudo = shield(link)
         #----Comarca----
         comarca = i.find(class_="Comarca")
         if comarca == None:
@@ -102,12 +105,14 @@ def scraping():
             densidadFloat = float(dend)
         print('Densidad - ', densidadFloat, ' hab./km²')
         print('-----------------------------------')
-    #     try:
-    #         cur.execute("INSERT INTO municipality(name,shield,region,province,ccaa,population,surface,"+
-    #         "altitude,density) VALUES (?,?,?,?,?,?,?,?,?)",
-    #         (municipioStr,escudo,comarca,provincia,CCAA,altitudFloat,superficieFloat,poblacionInt,densidadFloat))
-    #     except mariadb.Error as e: 
-    #         print(f"Error: {e}")
+        try:
+            cur.execute("INSERT INTO municipality(name,shield,region,province,ccaa,population,surface,"+
+            "altitude,density) VALUES (?,?,?,?,?,?,?,?,?)",
+            (municipioStr,escudo,comarca,provincia,CCAA,altitudFloat,superficieFloat,poblacionInt,densidadFloat))
+            conn.commit()
+            # print("Insertado")
+        except mariadb.Error as e: 
+            print(f"Error: {e}")
     
-    # conn.close()
+    conn.close()
     return None
