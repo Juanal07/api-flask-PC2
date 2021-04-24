@@ -29,43 +29,57 @@ def scraping():
         #----Comarca----
         comarca = i.find(class_="Comarca")
         if comarca == None:
-            comarca = 'Comarca - ' 
-            print(comarca)
+            comarca = None
         else:
-            print('Comarca - ' + comarca.text)
+            comarca = comarca.text
+        print('Comarca - ', comarca)
         #----Provincia----
         provincia = i.find(class_="Provincia")
-        print('Provincia - ' + provincia.text)
+        provincia = provincia.text
+        print('Provincia - ' + provincia)
         #----CCAA----
         CCAA = i.find(class_="CC.AA.")
-        print('CCAA - ' + CCAA.text)
+        CCAA = CCAA.text
+        print('CCAA - ' + CCAA)
         #----Altitud----
         altitud = i.find(class_="Altitud-(m.s.n.m.)")
         if altitud == None:
-            altitud = 'Altitud - ' 
-            print(altitud)
+            altitudFloat = None
         else:
-            print('Altitud - ' + altitud.text + ' m.s.n.m')
+            altitud = altitud.text
+            alt = altitud.replace(".","")
+            alti = alt.replace(",",".")
+            # altitud = re.sub('.','',altitud)
+            altitudFloat = float(alti)
+        print('Altitud - ', altitudFloat, ' m.s.n.m')
         #----Superficie----
         superficie = i.find(class_="Superficie-(km²)")
         if superficie == None:
-            superficie = 'Superficie - ' 
-            print(superficie)
+            superficieFloat = None
         else:
-            print('Superficie - ' + superficie.text + ' km²')
+            superficie = superficie.text
+            sup = superficie.replace(".","")
+            supe = sup.replace(",",".")
+            superficieFloat = float(supe)
+        print('Superficie - ', superficieFloat, ' km²')
         #----Poblacion----
         poblacion = i.find(class_="Población-(2019)")
         if poblacion == None:
-            poblacion = 'Poblacion - ' 
-            print(poblacion)
+            poblacionInt = None
         else:
-            print('Poblacion - ' + poblacion.text + ' habitantes ')
+            poblacion = poblacion.text
+            pob = poblacion.replace(".","")
+            poblacionInt = int(pob)
+        print('Poblacion - ', poblacionInt, ' habitantes ')
         #----Densidad----
         densidad = i.find(class_="Densidad-(hab./km²)")
         if densidad == None:
-            densidad = 'Densidad - ' 
-            print(densidad)
+            densidadFloat = None
         else:
-            print('Densidad - ' + densidad.text + ' hab./km²')
+            densidad = densidad.text
+            den = densidad.replace(".","")
+            dend = den.replace(",",".")
+            densidadFloat = float(dend)
+        print('Densidad - ', densidadFloat, ' hab./km²')
         print('-----------------------------------')
     return None

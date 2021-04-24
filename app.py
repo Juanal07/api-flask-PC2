@@ -50,4 +50,5 @@ def webscraping():
 
 if __name__ == '__main__':
     # main()
-    webscraping()
+    # webscraping()
+    ws_15mpedia.scraping()
