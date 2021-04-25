@@ -4,6 +4,7 @@ from src.webscraping import ws_15mpedia
 from src.webscraping import ws_opiniones
 from src.webscraping import ws_supermercados
 from src.webscraping import ws_noticias
+from src.webscraping import ws_estaciones
 from src.sentiment import sentiment
 
 def main():
@@ -51,4 +52,5 @@ def webscraping():
 if __name__ == '__main__':
     # main()
     # webscraping()
-    ws_15mpedia.scraping()
+    # ws_15mpedia.scraping()
+    ws_estaciones.scrap()
