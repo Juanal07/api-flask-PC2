@@ -19,12 +19,11 @@ def scrap():
 
     # Get Cursor
     cur = conn.cursor()
-    
+    errores = 0
     with open('listado-estaciones-completo-sel.csv', newline='', encoding='utf-8') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=';')
         for row in spamreader:
             code = row[0]
-            # codeInt = int(code) 
             name = row[1]
             dir = row[2]
             city:str = row[3]
@@ -40,17 +39,19 @@ def scrap():
                 feveInt = 1
             print(code,", ",name,", ",name,", ",dir,", ",city,", ",cercaniasInt,", ",feveInt)
             idMunicipality = 0
-            # query = ("SELECT idMunicipality FROM municipality WHERE name= '%s'")
-            # tupla:tuple = (city)
-            # cur.execute(query,tupla)
-            # cur.execute("SELECT idMunicipality FROM municipality WHERE name=?", (city))
-            query = "SELECT idMunicipality FROM municipality WHERE name= '"+ city+ "'"
-            cur.execute(query)
+            cur.execute("SELECT idMunicipality FROM municipality WHERE name=?", (city,))
             for (idMunicipality) in cur:
-                print(idMunicipality)
+                idMunicipio = idMunicipality[0]
+                print(idMunicipio)
+            try:
+                cur.execute("INSERT INTO station(cercanias,feve,name,address,idMunicipality) VALUES"+
+                "(?,?,?,?,?)",(cercaniasInt,feveInt,name,dir,idMunicipality[0]))
+            except:
+                errores +=1
+                print("ERROR")
             # print(', '.join(row))
-
-
-    # conn.commit()
+            
+    print("Errores: ",errores)
+    conn.commit()
     conn.close()
     return None
