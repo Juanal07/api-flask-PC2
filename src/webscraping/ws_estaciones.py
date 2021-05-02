@@ -20,7 +20,7 @@ def scrap():
     # Get Cursor
     cur = conn.cursor()
     errores = 0
-    with open('listado-estaciones-completo-sel.csv', newline='', encoding='utf-8') as csvfile:
+    with open('csv\listado-estaciones-completo-sel.csv', newline='', encoding='utf-8') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=';')
         for row in spamreader:
             code = row[0]
