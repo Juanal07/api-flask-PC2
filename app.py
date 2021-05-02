@@ -50,7 +50,7 @@ def webscraping():
 
 
 if __name__ == '__main__':
-    # main()
-    webscraping()
-    # ws_15mpedia.scraping()
-    # ws_estaciones.scrap()
+    # main() #Para ejecutar la API de flask y realizar el análisis del sentimiento
+    webscraping() #Para elegir entre los distintos ws a ejecutar
+    # ws_15mpedia.scraping() #Para insertar los municipios en la BBDD, ejecutar una sola vez (YA HECHO)
+    # ws_estaciones.scrap() #Para insertar las estaciones en la BBDD, ejecutar una sola vez (YA HECHO)
