@@ -5,6 +5,7 @@ from src.webscraping import ws_opiniones
 from src.webscraping import ws_supermercados
 from src.webscraping import ws_noticias
 from src.webscraping import ws_estaciones
+from src.webscraping import ws_sanidad
 from src.sentiment import sentiment
 
 def main():
@@ -51,6 +52,7 @@ def webscraping():
 
 if __name__ == '__main__':
     # main() #Para ejecutar la API de flask y realizar el análisis del sentimiento
-    webscraping() #Para elegir entre los distintos ws a ejecutar
+    # webscraping() #Para elegir entre los distintos ws a ejecutar
     # ws_15mpedia.scraping() #Para insertar los municipios en la BBDD, ejecutar una sola vez (YA HECHO)
     # ws_estaciones.scrap() #Para insertar las estaciones en la BBDD, ejecutar una sola vez (YA HECHO)
+    ws_sanidad.scrap()
