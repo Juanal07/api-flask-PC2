@@ -1,11 +1,56 @@
-import csv    
+import csv
+import mariadb
+import sys  
 
 def scrap():
 
+    #Conexión con BBDD
+    try:
+        conn = mariadb.connect(
+            user="pr_softlusion",
+            password="Softlusion",
+            host="2.139.176.212",
+            port=3306,
+            database="prsoftlusion"
+        )
+        print("Conexión a BBDD")
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB Platform: {e}")
+        sys.exit(1)
+
+    # Get Cursor
+    cur = conn.cursor()
+    errores = 0
+
+    #Centros atención primaria
+    cont = 0
     with open('csv\/20210502_Centros_de_Atencion_Primaria.csv', newline='', encoding='utf-8') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=';')
         for row in spamreader:
             # print(', '.join(row))
-            for i in row:
-                print(i)
-            print("\n")
+            if cont != 0:
+                name = row[0]
+                municipio = row[3]
+                address = row[5]
+                tipo = row[12]
+                print(name," ",municipio," ",address," ",tipo)
+                idMunicipality = 0
+                cur.execute("SELECT idMunicipality FROM municipality WHERE name=?", (municipio,))
+                for (idMunicipality) in cur:
+                    idMunicipio = idMunicipality[0]
+                    print(idMunicipio)
+                try:
+                    cur.execute("INSERT INTO medicalcenter_copy(name,type,address,idMunicipality) VALUES"+
+                    "(?,?,?,?)",(name,tipo,address,idMunicipality[0]))
+                except:
+                    errores +=1
+                    print("ERROR")
+            cont += 1
+
+
+
+
+    print("Errores: ",errores)
+    conn.commit()
+    conn.close()
+    return None
