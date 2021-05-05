@@ -3,7 +3,6 @@ import mariadb
 import sys  
 
 def scrap():
-
     #Conexión con BBDD
     try:
         conn = mariadb.connect(
