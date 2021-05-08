@@ -13,7 +13,8 @@ def searchProvincias(URL):
     provincia = input("Introduce el nombre de la provincia (con minúsculas y tilde): ")
     resultadoProvincia=False
     page = requests.get(URL)
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = BeautifulSoup(page.content, 'html.parser', from_encoding="utf-8")
+    # print("Encoding method :",soup.original_encoding)
 
     tablaProvincias = soup.find_all('li') #almaceno todos los li's de la web
     for item in tablaProvincias:
@@ -30,7 +31,7 @@ def searchProvincias(URL):
         if "/" in name:
             reg = re.match('(.*) \/.*',name)
             name = reg.group(1)
-        # print(name)
+        print(name)
         #digo se si ha encontrado la provinica o no
         if (name == provincia):
             link = item.find('a')['href']
@@ -48,6 +49,7 @@ def searchMunicipios(URL,name,linkProvincia):
     resultadoMunicipio=False
     proviniciaPage = requests.get(linkProvincia)
     htmlProvinciaPage = BeautifulSoup(proviniciaPage.content, 'html.parser')
+    print("Encoding method :",htmlProvinciaPage.original_encoding)
     aux = htmlProvinciaPage.find_all('table', width="700")
     tablaMunicipios = aux[0].find_all('a')
     #busco el municipio dentor de la provincia
@@ -56,7 +58,7 @@ def searchMunicipios(URL,name,linkProvincia):
         name = item.text
         name = name.lower()
         name = name[8:]
-        # print(name)
+        print(name)
         if (name == municipio):
             link = item['href']
             resultadoMunicipio=True
@@ -71,14 +73,15 @@ def showSupermercados(URL, link):
     linkMunicipio = URL + link
     try:
         municipioPage = requests.get(linkMunicipio)
-        htmlMunicipio = BeautifulSoup(municipioPage.content, 'html.parser')
+        htmlMunicipio = BeautifulSoup(municipioPage.content, 'html.parser', from_encoding="utf-8")
+        print("Encoding method :",htmlMunicipio.original_encoding)
         divsSupers = htmlMunicipio.find_all('div', style="text-align:left;background:#E9F2F2;border:1px solid #bad8db;margin-left:5px;margin-bottom:5px;padding:5px;min-height:50px;width:300px;")
         #print(divsSupers)
         for supermercado in divsSupers:
         #obtengo los datos para cada uno de los supermercados
             nombre = supermercado.find('b').text
             divMunicipio = supermercado.contents
-            distancia = divMunicipio[3][13:len(divMunicipio[3])-3]
+            distancia = float(divMunicipio[3][13:len(divMunicipio[3])-3])
             direccion = divMunicipio[8]
 
             #meto datos en la lista: nombre del supermercado, direción, distancia y provincia
