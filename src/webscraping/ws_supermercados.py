@@ -94,12 +94,14 @@ def searchMunicipios(URL,name,linkProvincia, municipio):
 def showSupermercados(URL, link):
     supermercados = []
     linkMunicipio = URL + link
+    
     try:
         municipioPage = requests.get(linkMunicipio)
         htmlMunicipio = BeautifulSoup(municipioPage.content, 'html.parser', from_encoding="utf-8")
         # print("Encoding method :",htmlMunicipio.original_encoding)
         divsSupers = htmlMunicipio.find_all('div', style="text-align:left;background:#E9F2F2;border:1px solid #bad8db;margin-left:5px;margin-bottom:5px;padding:5px;min-height:50px;width:300px;")
         #print(divsSupers)
+        json ='['
         for supermercado in divsSupers:
         #obtengo los datos para cada uno de los supermercados
             nombre = supermercado.find('b').text
@@ -110,7 +112,11 @@ def showSupermercados(URL, link):
             #meto datos en la lista: nombre del supermercado, direción, distancia y provincia
             tupla = (nombre, direccion, distancia)
             print(tupla)
+            json += ('{"nombre": "'+str(nombre)+'","direccion": "'+str(direccion)+'","distancia": '+str(distancia)+'},')
             supermercados.append(tupla)
+        json = json[:-1]
+        json += ']'
+        print(json)
 
     except:
         print("\nERROR en ", linkMunicipio, "\n")

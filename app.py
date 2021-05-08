@@ -54,12 +54,7 @@ def webscraping():
 
 if __name__ == '__main__':
     # main() #Para ejecutar la API de flask y realizar el análisis del sentimiento
-    # webscraping() #Para elegir entre los distintos ws a ejecutar (Segunda entrega PCII)
+    webscraping() #Para elegir entre los distintos ws a ejecutar (Segunda entrega PCII)
     # ws_15mpedia.scraping() #Para insertar los municipios en la BBDD, ejecutar una sola vez (YA HECHO)
     # ws_estaciones.scrap() #Para insertar las estaciones en la BBDD, ejecutar una sola vez (YA HECHO)
     # ws_sanidad.scrap() #Para insertar los centros sanitarios en la BBDD, ejecutar una sola vez (YA HECHO)
-
-    #Para ejecutar ws de supermercados en node
-    provincia = input("Introduce el nombre de la provincia (con minúsculas y tilde): ")
-    municipio = input("Introduce el nombre del municipio (con minúsculas y tilde): ")
-    ws_supermercados.scraping(provincia, municipio)
