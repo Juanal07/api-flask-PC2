@@ -50,7 +50,7 @@ def searchProvincias(URL, provincia, municipio):
         if "/" in name:
             reg = re.match('(.*) \/.*',name)
             name = reg.group(1)
-        print(name)
+        # print(name)
         #digo se si ha encontrado la provinica o no
         if (name == provincia):
             link = item.find('a')['href']
@@ -58,8 +58,8 @@ def searchProvincias(URL, provincia, municipio):
             searchMunicipios(URL,name,link, municipio)
             break
 
-    if resultadoProvincia==False:
-        print("Provincia no encontrada")       
+    # if resultadoProvincia==False:
+        # print("Provincia no encontrada")    
 
 
 def searchMunicipios(URL,name,linkProvincia, municipio):
@@ -87,8 +87,8 @@ def searchMunicipios(URL,name,linkProvincia, municipio):
             resultadoMunicipio=True
             showSupermercados(URL,link)
             break
-    if resultadoMunicipio==False:
-        print("Municipio no encontrado") 
+    # if resultadoMunicipio==False:
+    #     print("Municipio no encontrado") 
 
 
 def showSupermercados(URL, link):
@@ -111,7 +111,7 @@ def showSupermercados(URL, link):
 
             #meto datos en la lista: nombre del supermercado, direción, distancia y provincia
             tupla = (nombre, direccion, distancia)
-            print(tupla)
+            # print(tupla)
             json += ('{"nombre": "'+str(nombre)+'","direccion": "'+str(direccion)+'","distancia": '+str(distancia)+'},')
             supermercados.append(tupla)
         json = json[:-1]
@@ -119,9 +119,10 @@ def showSupermercados(URL, link):
         print(json)
 
     except:
-        print("\nERROR en ", linkMunicipio, "\n")
+        # print("\nERROR en ", linkMunicipio, "\n")
+        error=1 #valor random
 
-    if len(supermercados)==0:
-        print("No se encontraron supermercados cercanos en ese municipio")
+    # if len(supermercados)==0:
+    #     print("No se encontraron supermercados cercanos en ese municipio")
     
     #print(supermercados)
