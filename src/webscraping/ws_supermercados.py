@@ -79,7 +79,7 @@ def searchMunicipios(URL,name,linkProvincia, municipio):
     # municipio = input("Introduce el nombre del municipio (con minúsculas y tilde): ")
     for item in tablaMunicipios:
         name = item.text
-        name = name.lower()
+        # name = name.lower() # Comentado para cuadrar con los datos de BBDD
         name = name[8:]
         # print(name)
         if (name == municipio):

@@ -39,7 +39,7 @@ def webscraping():
             ws_opiniones.scraping()
         elif selector == '2':
             provincia = input("Introduce el nombre de la provincia (con minúsculas y tilde): ")
-            municipio = input("Introduce el nombre del municipio (con minúsculas y tilde): ")
+            municipio = input("Introduce el nombre del municipio (con tilde): ")
             ws_supermercados.scraping(provincia, municipio)
         elif selector == '3':
             ws_noticias.scraping()
