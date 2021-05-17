@@ -66,18 +66,30 @@ def scraping():
     stop_es = stopwords.words('spanish')
 
     # Creamos Matrix TF-IDF aplicando nuestras stop words y la mostramos
-    # cv_tfidf = TfidfVectorizer(analyzer='word', stop_words = stop_es)
-    tf1 = pickle.load(open("src\webscraping\/tfidf1.pkl", 'rb'))
+    cv_tfidf = TfidfVectorizer(analyzer='word', stop_words = stop_es)
+    X_tfidf = cv_tfidf.fit_transform(corpus).toarray()
+    # tf1 = pickle.load(open("src\webscraping\/tfidf1.pkl", 'rb'))
+    wordlist = pickle.load(open("src\webscraping\wordList.pk", 'rb'))
+    tfidf_new = wordlist.transform(corpus)
     # Create new tfidfVectorizer with old vocabulary
-    tf1_new = TfidfVectorizer(analyzer='word', stop_words = stop_es, vocabulary = tf1.vocabulary_)
-    X_tf1 = tf1_new.fit_transform(corpus)
+    # tf1_new = TfidfVectorizer(analyzer='word', stop_words = stop_es, vocabulary = tf1.vocabulary_, encoding= 'UTF-8')
+
+
+    
+    # X_tf1 = tf1_new.fit_transform(corpus)
     # X_tfidf = tf1.fit_transform(corpus).toarray()
     # pd.DataFrame(X_tfidf, columns=cv_tfidf.get_feature_names())
     # text_features = tf1.transform(corpus)
-    model = pickle.load(open('src\webscraping\modelo.pickle', 'rb'))
-    vectorizedCorpus = model.transform(corpus)
-    predictions = model.predict(vectorizedCorpus)
-    print("  - Predicted as: '{}'".format(predictions))
+
+    # model = pickle.load(open('src\webscraping\modelo.pickle', 'rb'))
+    model = pickle.load(open("src\webscraping\modeloNoticias.pk", 'rb'))
+    print('------------')
+    # print(tf1)
+    print('------------')
+    # vectorizedCorpus = model.transform(corpus)
+    # predictions = model.predict(vectorizedCorpus)
+    # print("  - Predicted as: '{}'".format(predictions))
+    print('done')
 
 def ws_articulo(link):
     try:
