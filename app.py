@@ -58,4 +58,4 @@ if __name__ == '__main__':
     # ws_15mpedia.scraping() #Para insertar los municipios en la BBDD, ejecutar una sola vez (YA HECHO)
     # ws_estaciones.scrap() #Para insertar las estaciones en la BBDD, ejecutar una sola vez (YA HECHO)
     # ws_sanidad.scrap() #Para insertar los centros sanitarios en la BBDD, ejecutar una sola vez (YA HECHO)
-    ws_noticias.scraping()
+    ws_noticias.scraping("madrid")
