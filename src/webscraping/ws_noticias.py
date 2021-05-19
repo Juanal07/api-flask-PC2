@@ -25,8 +25,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-import joblib #para exportar el modelo
-import pickle
+import pickle #para exportar el modelo
 
 def scraping(municipio):
     # Pueblo = input('Introduzca un municipio: ')
