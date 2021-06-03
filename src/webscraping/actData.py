@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import mariadb
 import sys
+import csv
 
 def shield(link):
     URL = 'https://15mpedia.org' + link
@@ -34,6 +35,7 @@ def actData():
     cur = conn.cursor()
 
     # URL = 'https://15mpedia.org/w/index.php?title=Especial:Ask&offset=0&limit=8134&q=%5B%5BPage+has+default+form%3A%3AMunicipio%5D%5D+%5B%5Bpa%C3%ADs%3A%3AEspa%C3%B1a%5D%5D&p=format%3Dtable%2Fmainlabel%3DMunicipio&po=%3F%3DMunicipio%23%0A%3FComarca%23-%0A%3FProvincia%0A%3FComunidad+aut%C3%B3noma%3DCC.AA.%0A%3FAltitud%3DAltitud+%28m.s.n.m.%29%0A%3FSuperficie%3DSuperficie+%28km%C2%B2%29%0A%3FPoblaci%C3%B3n+en+2019%3DPoblaci%C3%B3n+%282019%29%0A%3FDensidad+de+poblaci%C3%B3n%3DDensidad+%28hab.%2Fkm%C2%B2%29%0A&sort=nombre&order=asc'
+    #enlace de prueba reducido
     URL = 'https://15mpedia.org/w/index.php?title=Especial:Ask&offset=0&limit=20&q=%5B%5BPage+has+default+form%3A%3AMunicipio%5D%5D+%5B%5Bpa%C3%ADs%3A%3AEspa%C3%B1a%5D%5D&p=format%3Dtable%2Fmainlabel%3DMunicipio&po=%3F%3DMunicipio%23%0A%3FComarca%23-%0A%3FProvincia%0A%3FComunidad+aut%C3%B3noma%3DCC.AA.%0A%3FAltitud%3DAltitud+%28m.s.n.m.%29%0A%3FSuperficie%3DSuperficie+%28km%C2%B2%29%0A%3FPoblaci%C3%B3n+en+2019%3DPoblaci%C3%B3n+%282019%29%0A%3FDensidad+de+poblaci%C3%B3n%3DDensidad+%28hab.%2Fkm%C2%B2%29%0A&sort=nombre&order=asc'
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -153,6 +155,122 @@ def actData():
                 
     conn.commit()
     #al terminar la revision de los pueblos actualizamos los centros médicos y estaciones a las nuevas IDs
+    cur.execute("DELETE FROM station_copy")
+    errores = 0
+    with open('csv/listado-estaciones-completo-sel.csv', newline='', encoding='utf-8') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=';')
+        for row in spamreader:
+            code = row[0]
+            name = row[1]
+            dir = row[2]
+            city:str = row[3]
+            cercanias = row[4]
+            if cercanias=="SI":
+                cercaniasInt = 1
+            else:
+                cercaniasInt = 0
+            feve = row[5]
+            if feve =="NO":
+                feveInt = 0
+            else:
+                feveInt = 1
+            print(code,", ",name,", ",name,", ",dir,", ",city,", ",cercaniasInt,", ",feveInt)
+            idMunicipality = 0
+            cur.execute("SELECT idMunicipality FROM municipality_copy WHERE name=?", (city,))
+            for (idMunicipality) in cur:
+                idMunicipio = idMunicipality[0]
+                print(idMunicipio)
+            try:
+                cur.execute("INSERT INTO station_copy(cercanias,feve,name,address,idMunicipality) VALUES"+
+                "(?,?,?,?,?)",(cercaniasInt,feveInt,name,dir,idMunicipality[0]))
+            except:
+                errores +=1
+                print("ERROR")
+            # print(', '.join(row))
+            
+    print("Errores: ",errores)
+    conn.commit()
+
+    #ahora pasamos a centros medicos
+    cur.execute("DELETE FROM medicalcenter_copy")
+    errores = 0
+
+    #Centros atención primaria
+    cont = 0
+    with open('csv/20210502_Centros_de_Atencion_Primaria.csv', newline='', encoding='utf-8') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=';')
+        for row in spamreader:
+            # print(', '.join(row))
+            if cont != 0:
+                name = row[0]
+                municipio = row[3]
+                address = row[5]
+                tipo = row[12]
+                print(name," ",municipio," ",address," ",tipo)
+                idMunicipality = 0
+                cur.execute("SELECT idMunicipality FROM municipality_copy WHERE name=?", (municipio,))
+                for (idMunicipality) in cur:
+                    idMunicipio = idMunicipality[0]
+                    print(idMunicipio)
+                try:
+                    cur.execute("INSERT INTO medicalcenter_copy(name,type,address,idMunicipality) VALUES"+
+                    "(?,?,?,?)",(name,tipo,address,idMunicipality[0]))
+                except:
+                    errores +=1
+                    print("ERROR")
+            cont += 1
+
+    #Hospitales
+    cont = 0
+    with open('csv/20210502_Catalogo_de_Hospitales.csv', newline='', encoding='utf-8') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=';')
+        for row in spamreader:
+            # print(', '.join(row))
+            if cont != 0:
+                name = row[2]
+                municipio = row[5]
+                address = row[6]
+                tipo = row[10]
+                print(name," ",municipio," ",address," ",tipo)
+                idMunicipality = 0
+                cur.execute("SELECT idMunicipality FROM municipality_copy WHERE name=?", (municipio,))
+                for (idMunicipality) in cur:
+                    idMunicipio = idMunicipality[0]
+                    print(idMunicipio)
+                try:
+                    cur.execute("INSERT INTO medicalcenter_copy(name,type,address,idMunicipality) VALUES"+
+                    "(?,?,?,?)",(name,tipo,address,idMunicipality[0]))
+                except:
+                    errores +=1
+                    print("ERROR")
+            cont += 1
+
+    #Centros de Urgencias
+    cont = 0
+    with open('csv/20210502_Dispositivos_de_Urgencia_Extrahospitalaria.csv', newline='', encoding='utf-8') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=';')
+        for row in spamreader:
+            # print(', '.join(row))
+            if cont != 0:
+                name = row[3]
+                municipio = row[1]
+                address = row[4]
+                tipo = "Dispositivos de Urgencia Extrahospitalaria"
+                print(name," ",municipio," ",address," ",tipo)
+                idMunicipality = 0
+                cur.execute("SELECT idMunicipality FROM municipality_copy WHERE name=?", (municipio,))
+                for (idMunicipality) in cur:
+                    idMunicipio = idMunicipality[0]
+                    print(idMunicipio)
+                try:
+                    cur.execute("INSERT INTO medicalcenter_copy(name,type,address,idMunicipality) VALUES"+
+                    "(?,?,?,?)",(name,tipo,address,idMunicipality[0]))
+                except:
+                    errores +=1
+                    print("ERROR")
+            cont += 1
+
+    print("Errores: ",errores)
 
     conn.commit()
     conn.close()
