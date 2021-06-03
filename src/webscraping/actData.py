@@ -141,15 +141,15 @@ def actData():
                     cur.execute("UPDATE municipality_copy SET population=? WHERE idMunicipality=?", (poblacionInt,idMunicipio))
                     # conn.commit()
                     # exit(0)
-                if (popBD!=poblacionInt):
+                if (supBD!=superficieFloat):
                     print("a cambiar")
-                    cur.execute("UPDATE municipality_copy SET population=? WHERE idMunicipality=?", (poblacionInt,idMunicipio))
-                if (popBD!=poblacionInt):
+                    cur.execute("UPDATE municipality_copy SET surface=? WHERE idMunicipality=?", (superficieFloat,idMunicipio))
+                if (altBD!=altitudFloat):
                     print("a cambiar")
-                    cur.execute("UPDATE municipality_copy SET population=? WHERE idMunicipality=?", (poblacionInt,idMunicipio))
-                if (popBD!=poblacionInt):
+                    cur.execute("UPDATE municipality_copy SET altitude=? WHERE idMunicipality=?", (altitudFloat,idMunicipio))
+                if (denBD!=densidadFloat):
                     print("a cambiar")
-                    cur.execute("UPDATE municipality_copy SET population=? WHERE idMunicipality=?", (poblacionInt,idMunicipio))
+                    cur.execute("UPDATE municipality_copy SET density=? WHERE idMunicipality=?", (densidadFloat,idMunicipio))
                 
     conn.commit()
     #al terminar la revision de los pueblos actualizamos los centros médicos y estaciones a las nuevas IDs
