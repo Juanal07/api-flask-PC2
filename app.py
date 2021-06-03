@@ -55,8 +55,8 @@ from src.webscraping import actData
 
 if __name__ == '__main__':
     # main() #Para ejecutar la API de flask y realizar el análisis del sentimiento
-    # webscraping() #Para elegir entre los distintos ws a ejecutar (Segunda entrega PCII)
+    webscraping() #Para elegir entre los distintos ws a ejecutar (Segunda entrega PCII)
     # ws_15mpedia.scraping() #Para insertar los municipios en la BBDD, ejecutar una sola vez (YA HECHO)
     # ws_estaciones.scrap() #Para insertar las estaciones en la BBDD, ejecutar una sola vez (YA HECHO)
     # ws_sanidad.scrap() #Para insertar los centros sanitarios en la BBDD, ejecutar una sola vez (YA HECHO)
-    actData.actData() #para probar la actualizacion de los datos permanentes
+    # actData.actData() #para probar la actualizacion de los datos permanentes
